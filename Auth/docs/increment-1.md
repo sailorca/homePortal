@@ -1,3 +1,6 @@
+<!-- markdownlint-disable MD022 MD029 -->
+<!-- markdownlint-disable MD031 MD032 MD034 -->
+<!-- markdownlint-disable MD040 -->
 # Increment 1: Basic Authentication System
 
 **Completion Date:** November 27, 2025

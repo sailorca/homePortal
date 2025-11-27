@@ -60,6 +60,18 @@ export default function Dashboard() {
           <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
           <p className="text-lg mb-2">Welcome, {user?.email}</p>
           <p className="text-gray-600 mb-6">Role: {user?.role}</p>
+
+          {user?.role === 'admin' && (
+            <div className="mb-6">
+              <a
+                href="/admin"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
+              >
+                Admin Panel
+              </a>
+            </div>
+          )}
+
           <button
             onClick={handleLogout}
             className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"

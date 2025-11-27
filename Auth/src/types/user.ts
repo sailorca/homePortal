@@ -20,3 +20,12 @@ export interface UserSafe {
   email: string;
   role: string;
 }
+
+export interface UserWithMeta extends UserSafe {
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface UpdateUserRequest {
+  role?: 'admin' | 'user';
+}
