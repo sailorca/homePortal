@@ -1,0 +1,10 @@
+serverAddr = "127.0.0.1"
+serverPort = 7000
+auth.token = "12EGmAbtIO6yFajeHlZB8O4OMjpXvOB7NeceE/l11qo="
+
+[[proxies]]
+name = "ssh_stcp_server"
+type = "stcp"
+secretKey = "H4U5DG/6BFtq1Aq/fmf3cdCpPPX0Th5ucilb8riZL2k="
+localIP = "127.0.0.1"
+localPort = 22

@@ -1,0 +1,9 @@
+# frps.toml
+bindPort = 7000
+auth.token = "12EGmAbtIO6yFajeHlZB8O4OMjpXvOB7NeceE/l11qo="
+# Optional dashboard
+webServer.port = 7500
+webServer.user = "admin"
+webServer.password = "asmodeus"
+[transport]
+tls.force = true

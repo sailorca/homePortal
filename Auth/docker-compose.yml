@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: portal-postgres
+    environment:
+      POSTGRES_USER: portal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: portal_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - portal-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portal"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  nextjs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portal-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://portal:${POSTGRES_PASSWORD:-changeme}@postgres:5432/portal_db
+      JWT_SECRET: ${JWT_SECRET}
+      NODE_ENV: production
+    networks:
+      - portal-network
+    restart: unless-stopped
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.openresty
+    container_name: portal-nginx
+    depends_on:
+      - nextjs-app
+    ports:
+      - "3010:80"
+    networks:
+      - portal-network
+    restart: unless-stopped
+
+networks:
+  portal-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

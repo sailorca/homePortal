@@ -1,0 +1,23 @@
+serverAddr = "15.156.163.90"
+serverPort = 7000
+auth.token = "12EGmAbtIO6yFajeHlZB8O4OMjpXvOB7NeceE/l11qo="
+
+[transport]
+tls.enable = true
+
+[[visitors]]
+name = "ssh_stcp_visitor"
+type = "stcp"
+serverName = "ssh_stcp_server"
+secretKey = "H4U5DG/6BFtq1Aq/fmf3cdCpPPX0Th5ucilb8riZL2k="
+bindAddr = "127.0.0.1"
+bindPort = 6000
+
+# The Go template block starts here to generate the proxy configurations
+{{- range $_, $v := parseNumberRangePair "3000-3015" "3000-3015" }}
+[[proxies]]
+name = "demo-ports-{{ $v.First }}"
+type = "tcp"
+localPort = {{ $v.First }}
+remotePort = {{ $v.Second }}
+{{- end }}
